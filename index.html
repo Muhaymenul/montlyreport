@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Daily Tracker</title>
+    <meta name="theme-color" content="#0a5e2d">
+    <meta name="description" content="Track your daily Islamic activities and spiritual progress">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Islamic Tracker">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICAgIm5hbWUiOiAiSXNsYW1pYyBEYWlseSBUcmFja2VyIiwKICAgICJzaG9ydF9uYW1lIjogIklzbGFtaWNUcmFja2VyIiwKICAgICJkZXNjcmlwdGlvbiI6ICJUcmFjayB5b3VyIGRhaWx5IElzbGFtaWMgYWN0aXZpdGllcyBhbmQgc3Bpcml0dWFsIHByb2dyZXNzIiwKICAgICJzdGFydF91cmwiOiAiLi8iLAogICAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjBmN2U2IiwKICAgICJ0aGVtZV9jb2xvciI6ICIjMGE1ZTJkIiwKICAgICJvcmllbnRhdGlvbiI6ICJhbnkiLAogICAgImljb25zIjogWwogICAgICAgIHsKICAgICAgICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSEJ5WlhObGNuWmxRWE53WldOMFVtRjBhVzg5SW5oTmFXNVpUV2x1SUcxbFpYUWlJSFpwWlhkQ2IzZzlJakFnTUNBek5UQWdNelV3SWo0S1BITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSEJ5WlhObGNuWmxRWE53WldOMFVtRjBhVzg5SW5oTmFXNVpUV2x1SUcxbFpYUWlJRzF2WkdVOUltOXlaR1Z5SWlCb1pXbG5hSFE5SWpFd01DVWlJR1pwYkd3OUltNXZibVVpSUdacGJHd3RjMmw2WlRvZ01UQXdNQ1VpTHo0S1pXNWtiMkpxWldOMFBnb2dJRHh3WVhSb0lHWnBiR3d0YzJsNlpUb2dNVEF3TUNVaUlIWnBaWGRDYjNnOUlqQWdNQ0F6TlRBZ016VXdJajRLUEM5emRtYytDZz09IiwKICAgICAgICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAgICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIQnlaWE5sY25abFFYTndaV04wVW1GMGFXODlJbmhOYVc1WlRXbHVJRzFsWlhRaUlIWnBaWGRDYjNnOUlqQWdNQ0F6TlRBZ016VXdJajRLUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIQnlaWE5sY25abFFYTndaV04wVW1GMGFXODlJbmhOYVc1WlRXbHVJRzFsWlhRaUlHMXZaR1U5SW05eVpHVnlJaUJvWldsbmFIUTlJakV3TUNVaUlHWnBiR3c5SW01dmJtVWlJR1pwYkd3dGMybDZaVG9nTVRBd01DVWlMejRLUEM5emRtYytDZz09IiwKICAgICAgICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAgICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgICAgIH0KICAgIF0KfQ==">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --islamic-green: #0a5e2d;
+            --gold: #d4af37;
+            --light-beige: #f8f3e6;
+            --dark-green: #064e23;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f7e6 0%, #e8f4f8 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-bottom: 5px solid var(--islamic-green);
+        }
+
+        .header h1 {
+            color: var(--islamic-green);
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .islamic-pattern {
+            height: 8px;
+            background: repeating-linear-gradient(45deg, var(--islamic-green), var(--islamic-green) 10px, var(--gold) 10px, var(--gold) 20px);
+            border-radius: 5px;
+            margin: 8px 0;
+        }
+
+        .date-display {
+            text-align: center;
+            font-size: 16px;
+            margin: 10px 0;
+            color: var(--dark-green);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .tab.active {
+            background: var(--islamic-green);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .table-container {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 1100px;
+        }
+
+        .activity-table th {
+            background: var(--islamic-green);
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+        }
+
+        .activity-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .activity-table tr:nth-child(even) {
+            background: var(--light-beige);
+        }
+
+        .activity-table tr:hover {
+            background: #e8f4e8;
+        }
+
+        .activity-table input, .activity-table select {
+            width: 100%;
+            padding: 8px 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .activity-table input:focus, .activity-table select:focus {
+            border-color: var(--islamic-green);
+            outline: none;
+            box-shadow: 0 0 5px rgba(10, 94, 45, 0.3);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            background: var(--islamic-green);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+            flex: 1;
+        }
+
+        button:hover {
+            background: var(--dark-green);
+        }
+
+        .save-btn {
+            background: var(--islamic-green);
+        }
+
+        .add-row-btn {
+            background: var(--gold);
+            color: var(--dark-green);
+        }
+
+        .add-row-btn:hover {
+            background: #c19b2c;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--islamic-green);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--islamic-green);
+            margin: 8px 0;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .help-text {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+            display: block;
+        }
+
+        .icon {
+            margin-right: 5px;
+            color: var(--islamic-green);
+        }
+
+        .chart-container {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .export-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .export-btn {
+            background: var(--gold);
+            color: var(--dark-green);
+            width: auto;
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+
+        .export-btn:hover {
+            background: #c19b2c;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 15px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+
+        .sub-columns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .sub-column {
+            flex: 1;
+        }
+
+        .sub-column input {
+            width: 100%;
+        }
+
+        /* PWA Specific Styles */
+        .install-btn {
+            background: var(--gold);
+            color: var(--dark-green);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 12px 16px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            border: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .offline-notice {
+            background: #ffeb3b;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            font-weight: bold;
+        }
+
+        .pwa-features {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+
+        .pwa-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pwa-features li {
+            margin: 5px 0;
+        }
+
+        .pwa-features i {
+            color: var(--islamic-green);
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 5px;
+            }
+            
+            .export-btn {
+                display: block;
+                margin: 8px 0;
+                width: 100%;
+            }
+            
+            .activity-table {
+                font-size: 12px;
+            }
+            
+            .activity-table th, 
+            .activity-table td {
+                padding: 8px 5px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .sub-columns {
+                flex-direction: column;
+                gap: 2px;
+            }
+            
+            .install-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+        }
+
+        .column-help {
+            font-size: 10px;
+            color: #888;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* App-like styles for standalone mode */
+        @media all and (display-mode: standalone) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+            
+            .header {
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-notice" id="offlineNotice">
+        <i class="fas fa-wifi"></i> You are currently offline - App is still functional
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-mosque icon"></i>Islamic Daily Tracker</h1>
+            <p>Track your spiritual and personal activities</p>
+            <div class="islamic-pattern"></div>
+            <div class="date-display" id="currentDate"></div>
+            
+            <div class="pwa-features">
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Works offline</li>
+                    <li><i class="fas fa-mobile-alt"></i> Install as app</li>
+                    <li><i class="fas fa-sync-alt"></i> Auto-saves data</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="tracker">Daily Tracker</div>
+            <div class="tab" data-tab="progress">Progress</div>
+            <div class="tab" data-tab="export">Export Data</div>
+        </div>
+
+        <div class="tab-content active" id="tracker">
+            <div class="table-container">
+                <h2><i class="fas fa-table icon"></i>Daily Activities</h2>
+                <p>Enter your daily activities in the table below</p>
+                
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>S<br><span class="column-help">Jamat/Kaja</span></th>
+                            <th>Q<br><span class="column-help">Quran Verses</span></th>
+                            <th>H<br><span class="column-help">Hadith Count</span></th>
+                            <th>L<br><span class="column-help">Lit. Pages</span></th>
+                            <th>OR<br><span class="column-help">Org. Time (min)</span></th>
+                            <th>CM<br><span class="column-help">Comm. Counts</span></th>
+                            <th>N<br><span class="column-help">Nisan Details</span></th>
+                            <th>PE<br><span class="column-help">Exercise Details</span></th>
+                            <th>PS/WT<br><span class="column-help">Study/Work Time</span></th>
+                            <th>SC<br><span class="column-help">Self Criticism</span></th>
+                            <th>Remarks</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activitiesTableBody">
+                        <!-- Table rows will be added here -->
+                    </tbody>
+                </table>
+                
+                <div class="form-actions">
+                    <button class="add-row-btn" id="addRowBtn"><i class="fas fa-plus-circle icon"></i>Add New Row</button>
+                    <button class="save-btn" id="saveDataBtn"><i class="fas fa-save icon"></i>Save All Data</button>
+                </div>
+                
+                <div id="emptyTableState" class="empty-state" style="display: none;">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>No Activities Recorded</h3>
+                    <p>Click "Add New Row" to start tracking your activities.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="progress">
+            <div class="table-container">
+                <h2><i class="fas fa-chart-line icon"></i>Monthly Progress</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Salat (Jamat)</div>
+                        <div class="stat-value" id="jamatStat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Quran Verses</div>
+                        <div class="stat-value" id="quranStat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Hadith Studied</div>
+                        <div class="stat-value" id="hadithStat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Literature Pages</div>
+                        <div class="stat-value" id="literatureStat">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Self Criticism</div>
+                        <div class="stat-value" id="criticismStat">0%</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="progressChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="export">
+            <div class="table-container">
+                <h2><i class="fas fa-file-export icon"></i>Export Data</h2>
+                <p>Export your monthly or yearly data for record keeping and analysis.</p>
+                
+                <div class="form-actions">
+                    <div style="flex: 1;">
+                        <label for="exportMonth">Select Month</label>
+                        <input type="month" id="exportMonth" style="width: 100%; margin-top: 5px;">
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <label for="exportYear">Select Year</label>
+                        <input type="number" id="exportYear" min="2020" max="2030" value="2023" style="width: 100%; margin-top: 5px;">
+                    </div>
+                </div>
+                
+                <div class="export-section">
+                    <button class="export-btn" id="exportMonthlyBtn"><i class="fas fa-file-excel icon"></i>Export Monthly Data</button>
+                    <button class="export-btn" id="exportYearlyBtn"><i class="fas fa-chart-bar icon"></i>Export Yearly Report</button>
+                </div>
+                
+                <div id="exportResult" style="margin-top: 15px; padding: 12px; background: #f0f7e6; border-radius: 8px; display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Install Button -->
+    <button class="install-btn" id="installButton">
+        <i class="fas fa-download"></i> Install App
+    </button>
+
+    <script>
+        // Display current date
+        const now = new Date();
+        document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+
+        // Set current month for export
+        document.getElementById('exportMonth').value = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}`;
+        document.getElementById('exportYear').value = now.getFullYear();
+
+        // ========== PWA FUNCTIONALITY ==========
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Register service worker with inline code
+                const swCode = `
+                    const CACHE_NAME = 'islamic-tracker-v1.2';
+                    const urlsToCache = [
+                        './',
+                        './index.html'
+                    ];
+
+                    self.addEventListener('install', function(event) {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(function(cache) {
+                                    return cache.addAll(urlsToCache);
+                                })
+                        );
+                    });
+
+                    self.addEventListener('fetch', function(event) {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(function(response) {
+                                    if (response) {
+                                        return response;
+                                    }
+                                    return fetch(event.request);
+                                })
+                        );
+                    });
+
+                    self.addEventListener('activate', function(event) {
+                        event.waitUntil(
+                            caches.keys().then(function(cacheNames) {
+                                return Promise.all(
+                                    cacheNames.map(function(cacheName) {
+                                        if (cacheName !== CACHE_NAME) {
+                                            return caches.delete(cacheName);
+                                        }
+                                    })
+                                );
+                            })
+                        );
+                    });
+                `;
+
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+
+                navigator.serviceWorker.register(swUrl)
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(error) {
+                        console.log('SW registration failed: ', error);
+                    });
+            });
+        }
+
+        // PWA Installation Prompt
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                if (installButton.style.display === 'block') {
+                    installButton.style.display = 'none';
+                }
+            }, 10000);
+        });
+        
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                    installButton.innerHTML = '<i class="fas fa-check"></i> Installed!';
+                    installButton.style.background = '#4CAF50';
+                    setTimeout(() => {
+                        installButton.style.display = 'none';
+                    }, 2000);
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+            }
+        });
+        
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            installButton.style.display = 'none';
+            localStorage.setItem('appInstalled', 'true');
+            
+            // Show success message
+            const exportResult = document.getElementById('exportResult');
+            exportResult.innerHTML = '<p><i class="fas fa-check-circle"></i> App installed successfully! You can now use it like a native app.</p>';
+            exportResult.style.display = 'block';
+            setTimeout(() => {
+                exportResult.style.display = 'none';
+            }, 5000);
+        });
+
+        // Offline/Online detection
+        window.addEventListener('online', () => {
+            document.getElementById('offlineNotice').style.display = 'none';
+        });
+        
+        window.addEventListener('offline', () => {
+            document.getElementById('offlineNotice').style.display = 'block';
+        });
+
+        // Check if already installed
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('Running in standalone mode');
+            installButton.style.display = 'none';
+        }
+
+        // ========== APP FUNCTIONALITY ==========
+        
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+                
+                if(tab.dataset.tab === 'progress') {
+                    updateProgressStats();
+                }
+            });
+        });
+
+        // Load activities from localStorage
+        let activities = JSON.parse(localStorage.getItem('islamicActivities')) || [];
+
+        // Add new row to table
+        document.getElementById('addRowBtn').addEventListener('click', function() {
+            addTableRow();
+        });
+
+        // Save all data
+        document.getElementById('saveDataBtn').addEventListener('click', function() {
+            saveAllData();
+        });
+
+        // Add a new row to the table
+        function addTableRow(activity = null) {
+            const tableBody = document.getElementById('activitiesTableBody');
+            const emptyState = document.getElementById('emptyTableState');
+            
+            emptyState.style.display = 'none';
+            
+            const row = document.createElement('tr');
+            const rowId = activity ? activity.id : Date.now();
+            
+            // Default values for new row
+            const defaultDate = activity ? new Date(activity.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+            const defaultSJamat = activity ? activity.SJamat || '' : '';
+            const defaultSKaja = activity ? activity.SKaja || '' : '';
+            const defaultQ = activity ? activity.Q || '' : '';
+            const defaultH = activity ? activity.H || '' : '';
+            const defaultL = activity ? activity.L || '' : '';
+            const defaultOR = activity ? activity.OR || '' : '';
+            const defaultCMSC = activity ? activity.CMSC || '' : '';
+            const defaultCMBDC = activity ? activity.CMBDC || '' : '';
+            const defaultCMO = activity ? activity.CMO || '' : '';
+            const defaultN = activity ? activity.N || '' : '';
+            const defaultPE = activity ? activity.PE || '' : '';
+            const defaultPSWT = activity ? activity['PS/WT'] || '' : '';
+            const defaultSC = activity ? activity.SC || '' : '';
+            const defaultRemarks = activity ? activity.Remarks || '' : '';
+            
+            row.innerHTML = `
+                <td><input type="date" value="${defaultDate}" class="date-input"></td>
+                <td>
+                    <div class="sub-columns">
+                        <div class="sub-column">
+                            <input type="number" min="0" value="${defaultSJamat}" class="s-jamat-input" placeholder="Jamat">
+                            <div class="help-text">Jamat</div>
+                        </div>
+                        <div class="sub-column">
+                            <input type="number" min="0" value="${defaultSKaja}" class="s-kaja-input" placeholder="Kaja">
+                            <div class="help-text">Kaja</div>
+                        </div>
+                    </div>
+                </td>
+                <td><input type="number" min="0" value="${defaultQ}" class="q-input" placeholder="Verses"></td>
+                <td><input type="number" min="0" value="${defaultH}" class="h-input" placeholder="Hadith"></td>
+                <td><input type="number" min="0" value="${defaultL}" class="l-input" placeholder="Pages"></td>
+                <td><input type="number" min="0" value="${defaultOR}" class="or-input" placeholder="Minutes"></td>
+                <td>
+                    <div class="sub-columns">
+                        <div class="sub-column">
+                            <input type="number" min="0" value="${defaultCMSC}" class="cm-sc-input" placeholder="SC">
+                            <div class="help-text">SC</div>
+                        </div>
+                        <div class="sub-column">
+                            <input type="number" min="0" value="${defaultCMBDC}" class="cm-bdc-input" placeholder="BDC">
+                            <div class="help-text">BDC</div>
+                        </div>
+                        <div class="sub-column">
+                            <input type="number" min="0" value="${defaultCMO}" class="cm-o-input" placeholder="O">
+                            <div class="help-text">Others</div>
+                        </div>
+                    </div>
+                </td>
+                <td><input type="text" value="${defaultN}" class="n-input" placeholder="Nisan details"></td>
+                <td><input type="text" value="${defaultPE}" class="pe-input" placeholder="Exercise details"></td>
+                <td><input type="text" value="${defaultPSWT}" class="pswt-input" placeholder="Study/Work time"></td>
+                <td>
+                    <select class="sc-input">
+                        <option value="">--</option>
+                        <option value="Yes" ${defaultSC === 'Yes' ? 'selected' : ''}>Yes</option>
+                        <option value="No" ${defaultSC === 'No' ? 'selected' : ''}>No</option>
+                    </select>
+                </td>
+                <td><input type="text" value="${defaultRemarks}" class="remarks-input" placeholder="Additional notes"></td>
+                <td><button class="delete-btn" onclick="deleteTableRow(this, ${rowId})">Delete</button></td>
+            `;
+            
+            tableBody.appendChild(row);
+        }
+
+        // Delete a row from the table
+        function deleteTableRow(button, rowId) {
+            if(confirm('Are you sure you want to delete this row?')) {
+                const row = button.closest('tr');
+                row.remove();
+                
+                activities = activities.filter(activity => activity.id !== rowId);
+                localStorage.setItem('islamicActivities', JSON.stringify(activities));
+                
+                const tableBody = document.getElementById('activitiesTableBody');
+                if(tableBody.children.length === 0) {
+                    document.getElementById('emptyTableState').style.display = 'block';
+                }
+            }
+        }
+
+        // Save all data from the table
+        function saveAllData() {
+            const tableBody = document.getElementById('activitiesTableBody');
+            const rows = tableBody.querySelectorAll('tr');
+            
+            activities = [];
+            
+            rows.forEach(row => {
+                const dateInput = row.querySelector('.date-input').value;
+                const sJamatInput = row.querySelector('.s-jamat-input').value;
+                const sKajaInput = row.querySelector('.s-kaja-input').value;
+                const qInput = row.querySelector('.q-input').value;
+                const hInput = row.querySelector('.h-input').value;
+                const lInput = row.querySelector('.l-input').value;
+                const orInput = row.querySelector('.or-input').value;
+                const cmSCInput = row.querySelector('.cm-sc-input').value;
+                const cmBDCInput = row.querySelector('.cm-bdc-input').value;
+                const cmOInput = row.querySelector('.cm-o-input').value;
+                const nInput = row.querySelector('.n-input').value;
+                const peInput = row.querySelector('.pe-input').value;
+                const pswtInput = row.querySelector('.pswt-input').value;
+                const scInput = row.querySelector('.sc-input').value;
+                const remarksInput = row.querySelector('.remarks-input').value;
+                
+                const deleteBtn = row.querySelector('.delete-btn');
+                const rowId = deleteBtn ? parseInt(deleteBtn.getAttribute('onclick').match(/\d+/)[0]) : Date.now();
+                
+                const activity = {
+                    id: rowId,
+                    date: dateInput,
+                    SJamat: sJamatInput,
+                    SKaja: sKajaInput,
+                    Q: qInput,
+                    H: hInput,
+                    L: lInput,
+                    OR: orInput,
+                    CMSC: cmSCInput,
+                    CMBDC: cmBDCInput,
+                    CMO: cmOInput,
+                    N: nInput,
+                    PE: peInput,
+                    'PS/WT': pswtInput,
+                    SC: scInput,
+                    Remarks: remarksInput
+                };
+                
+                activities.push(activity);
+            });
+            
+            localStorage.setItem('islamicActivities', JSON.stringify(activities));
+            
+            // Show save confirmation
+            const exportResult = document.getElementById('exportResult');
+            exportResult.innerHTML = '<p><i class="fas fa-check-circle"></i> All data saved successfully!</p>';
+            exportResult.style.display = 'block';
+            setTimeout(() => {
+                exportResult.style.display = 'none';
+            }, 3000);
+        }
+
+        // Load existing data into table
+        function loadTableData() {
+            const tableBody = document.getElementById('activitiesTableBody');
+            const emptyState = document.getElementById('emptyTableState');
+            
+            if (activities.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            activities.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            activities.forEach(activity => {
+                addTableRow(activity);
+            });
+        }
+
+        // Update progress statistics
+        function updateProgressStats() {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            const monthActivities = activities.filter(activity => {
+                const activityDate = new Date(activity.date);
+                return activityDate.getMonth() === currentMonth && activityDate.getFullYear() === currentYear;
+            });
+            
+            let totalJamat = 0;
+            let totalVerses = 0;
+            let totalHadith = 0;
+            let totalPages = 0;
+            let selfCriticismYes = 0;
+            let selfCriticismTotal = 0;
+            
+            monthActivities.forEach(activity => {
+                if(activity.SJamat) totalJamat += parseInt(activity.SJamat) || 0;
+                if(activity.Q) totalVerses += parseInt(activity.Q) || 0;
+                if(activity.H) totalHadith += parseInt(activity.H) || 0;
+                if(activity.L) totalPages += parseInt(activity.L) || 0;
+                if(activity.SC) {
+                    selfCriticismTotal++;
+                    if(activity.SC === 'Yes') selfCriticismYes++;
+                }
+            });
+            
+            document.getElementById('jamatStat').textContent = totalJamat;
+            document.getElementById('quranStat').textContent = totalVerses;
+            document.getElementById('hadithStat').textContent = totalHadith;
+            document.getElementById('literatureStat').textContent = totalPages;
+            
+            const criticismPercent = selfCriticismTotal > 0 ? 
+                Math.round((selfCriticismYes / selfCriticismTotal) * 100) : 0;
+            document.getElementById('criticismStat').textContent = `${criticismPercent}%`;
+            
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            
+            if(window.progressChart) {
+                window.progressChart.destroy();
+            }
+            
+            window.progressChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Salat (Jamat)', 'Quran Verses', 'Hadith', 'Literature Pages', 'Self Criticism %'],
+                    datasets: [{
+                        label: 'Monthly Progress',
+                        data: [totalJamat, totalVerses, totalHadith, totalPages, criticismPercent],
+                        backgroundColor: [
+                            '#0a5e2d',
+                            '#0a5e2d',
+                            '#0a5e2d',
+                            '#0a5e2d',
+                            '#d4af37'
+                        ],
+                        borderColor: [
+                            '#064e23',
+                            '#064e23',
+                            '#064e23',
+                            '#064e23',
+                            '#b8941f'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Export functionality
+        document.getElementById('exportMonthlyBtn').addEventListener('click', function() {
+            const month = document.getElementById('exportMonth').value;
+            if(!month) {
+                alert('Please select a month');
+                return;
+            }
+            
+            const [year, monthNum] = month.split('-');
+            const monthActivities = activities.filter(activity => {
+                const activityDate = new Date(activity.date);
+                return activityDate.getFullYear() == year && 
+                      (activityDate.getMonth() + 1) == monthNum;
+            });
+            
+            if(monthActivities.length === 0) {
+                document.getElementById('exportResult').innerHTML = '<p>No data found for the selected month.</p>';
+                document.getElementById('exportResult').style.display = 'block';
+                return;
+            }
+            
+            let csv = 'Date,S (Jamat),S (Kaja),Q (Quran Verses),H (Hadith),L (Literature Pages),OR (Org Time),CM (SC),CM (BDC),CM (Others),N (Nisan),PE (Exercise),PS/WT (Study/Work),SC (Self Criticism),Remarks\n';
+            monthActivities.forEach(activity => {
+                const date = new Date(activity.date).toLocaleDateString();
+                csv += `"${date}","${activity.SJamat || ''}","${activity.SKaja || ''}","${activity.Q || ''}","${activity.H || ''}","${activity.L || ''}","${activity.OR || ''}","${activity.CMSC || ''}","${activity.CMBDC || ''}","${activity.CMO || ''}","${activity.N || ''}","${activity.PE || ''}","${activity['PS/WT'] || ''}","${activity.SC || ''}","${activity.Remarks || ''}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `islamic-tracker-${month}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            document.getElementById('exportResult').innerHTML = `<p>Monthly data exported successfully! File: islamic-tracker-${month}.csv</p>`;
+            document.getElementById('exportResult').style.display = 'block';
+        });
+
+        // Yearly export functionality
+        document.getElementById('exportYearlyBtn').addEventListener('click', function() {
+            const year = document.getElementById('exportYear').value;
+            if(!year) {
+                alert('Please select a year');
+                return;
+            }
+            
+            const yearActivities = activities.filter(activity => {
+                const activityDate = new Date(activity.date);
+                return activityDate.getFullYear() == year;
+            });
+            
+            if(yearActivities.length === 0) {
+                document.getElementById('exportResult').innerHTML = '<p>No data found for the selected year.</p>';
+                document.getElementById('exportResult').style.display = 'block';
+                return;
+            }
+            
+            let csv = 'Month,Salat (Jamat),Quran Verses,Hadith Studied,Literature Pages,Self Criticism (%)\n';
+            
+            const monthlyData = {};
+            yearActivities.forEach(activity => {
+                const activityDate = new Date(activity.date);
+                const month = activityDate.getMonth();
+                
+                if(!monthlyData[month]) {
+                    monthlyData[month] = {
+                        jamat: 0,
+                        verses: 0,
+                        hadith: 0,
+                        pages: 0,
+                        criticismYes: 0,
+                        criticismTotal: 0
+                    };
+                }
+                
+                if(activity.SJamat) monthlyData[month].jamat += parseInt(activity.SJamat) || 0;
+                if(activity.Q) monthlyData[month].verses += parseInt(activity.Q) || 0;
+                if(activity.H) monthlyData[month].hadith += parseInt(activity.H) || 0;
+                if(activity.L) monthlyData[month].pages += parseInt(activity.L) || 0;
+                if(activity.SC) {
+                    monthlyData[month].criticismTotal++;
+                    if(activity.SC === 'Yes') monthlyData[month].criticismYes++;
+                }
+            });
+            
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                               'July', 'August', 'September', 'October', 'November', 'December'];
+            
+            for(let month = 0; month < 12; month++) {
+                if(monthlyData[month]) {
+                    const data = monthlyData[month];
+                    const criticismPercent = data.criticismTotal > 0 ? 
+                        Math.round((data.criticismYes / data.criticismTotal) * 100) : 0;
+                    
+                    csv += `"${monthNames[month]}",${data.jamat},${data.verses},${data.hadith},${data.pages},${criticismPercent}\n`;
+                } else {
+                    csv += `"${monthNames[month]}",0,0,0,0,0\n`;
+                }
+            }
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `islamic-tracker-yearly-${year}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            document.getElementById('exportResult').innerHTML = `<p>Yearly report exported successfully! File: islamic-tracker-yearly-${year}.csv</p>`;
+            document.getElementById('exportResult').style.display = 'block';
+        });
+
+        // Auto-save every 2 minutes
+        setInterval(() => {
+            if (activities.length > 0) {
+                saveAllData();
+            }
+        }, 120000);
+
+        // Initial load
+        loadTableData();
+
+        if(document.getElementById('progress').classList.contains('active')) {
+            updateProgressStats();
+        }
+
+        // Show PWA features info
+        console.log('Islamic Daily Tracker PWA loaded successfully!');
+        console.log('Features: Offline support, Installable, Auto-save');
+    </script>
+</body>
+</html>
